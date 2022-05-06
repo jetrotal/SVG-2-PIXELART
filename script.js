@@ -19,6 +19,7 @@ The essential libraries and modules are being loaded through the html file, they
 
 */
 
+
 var _w = window; // 'window' can be altered to node equivalent, which is 'global'
 
 var createHTMLmenu = function() {
