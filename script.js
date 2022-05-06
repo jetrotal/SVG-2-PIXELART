@@ -85,10 +85,21 @@ var createHTMLmenu = function() {
     };
 
     createOptDivs(opts, document.getElementById("pixelProperties"));
+    
     strokeRange.oninput = sizeRange.oninput = aliasingRange.oninput = resolutionRange.oninput = thicknessRange.oninput = function() {
         changeLoader("block");
         sleep(1).then(updateSVGcanvas);
     };
+
+    window.fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = ".svg";
+
+    fileInput.onchange = (e) => {
+        changeLoader("block");
+        sleep(1).then(initFileLoader(e));
+    };
+
 }();
 
 var EssentialFunctions = function() {
@@ -286,15 +297,6 @@ var setSettings = function() {
         default: { thVal: 127, alVal: 255, resVal: 25, sizeVal: 100, renderEngine:0,stkVal:50 , obj: Object.keys(pxObject) },
         current: { thVal: Math.abs(thicknessRange.value), alVal: aliasingRange.value, resVal: resolutionRange.value, sizeVal: sizeRange.value, renderEngine:renderEngine.value,stkVal:strokeRange.value, obj: Object.keys(pxObject) }
     };
-};
-
-var fileInput = document.createElement("input");
-fileInput.type = "file";
-fileInput.accept = ".svg";
-
-fileInput.onchange = (e) => {
-    changeLoader("block");
-    sleep(1).then(initFileLoader(e));
 };
 
 function initFileLoader(e) {
@@ -654,8 +656,8 @@ function initUpdate(mode, targetSetting) {
         else if (_id("snapPixels").checked) {
 
 
-            x = snapLayerTo(x, pixelSize, newCanvas.width / 2);
-            y = snapLayerTo(y, pixelSize, newCanvas.height / 2);
+            x = snapLayerToGrid(x, pixelSize, newCanvas.width / 2);
+            y = snapLayerToGrid(y, pixelSize, newCanvas.height / 2);
         }
 
         ctx.imageSmoothingEnabled = false;
@@ -709,7 +711,7 @@ function drawBackground(ctx, target, color = "red") {
     ctx.fillRect(0, 0, target.width, target.height);
 };
 
-function snapLayerTo(x, y, z) {
+function snapLayerToGrid(x, y, z) {
     if (z && x >= z) y = -y;
     if (y == 0) y = 1;
     return Math.floor(x / y) * y;
