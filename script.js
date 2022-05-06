@@ -1,4 +1,5 @@
 //Dear Dev, collapse/minimize all the functions to get the general gist of the code
+var _w = window; // 'window' can be altered to node equivalent, which is 'global'
 
 var createHTMLmenu = function() {
 
@@ -91,7 +92,7 @@ var createHTMLmenu = function() {
         sleep(1).then(updateSVGcanvas);
     };
 
-    window.fileInput = document.createElement("input");
+    _w.fileInput = document.createElement("input");
     fileInput.type = "file";
     fileInput.accept = ".svg";
 
@@ -103,27 +104,27 @@ var createHTMLmenu = function() {
 }();
 
 var EssentialFunctions = function() {
-    window._id = function(a) {
+    _w._id = function(a) {
         return document.getElementById(a);
     };
 
-    window.sleep = function(ms) {
+    _w.sleep = function(ms) {
         return new Promise((resolve) => setTimeout(resolve, ms));
     };
 
-    window.doesArrContains = function(arr, value) {
+    _w.doesArrContains = function(arr, value) {
         for (var i = 0; i < arr.length; i++)
             if (arr[i] == value) return true;
         return false;
     };
 
-    window.eraseHTML = function(obj) {
+    _w.eraseHTML = function(obj) {
         try {
             obj.remove();
         } catch (e) {}
     };
 
-    window.makeBlob = function(tgt, objType = "image/svg+xml") {
+    _w.makeBlob = function(tgt, objType = "image/svg+xml") {
         const blob = new Blob([tgt], {
             type: objType
         });
@@ -132,7 +133,7 @@ var EssentialFunctions = function() {
         return url;
     };
 
-    window.changeLoader = async function(a) {
+    _w.changeLoader = async function(a) {
         return new Promise(async function(resolve, reject) {
             document.body.style.backgroundPosition = "0";
 
@@ -276,20 +277,20 @@ var pixelLayerObject = class {
 
 var setDefaultVariables = function() {
     _id("temp").innerHTML = "";
-    window.baseImg = "";
-    window.colorPalette = [];
-    window.colorThief = new ColorThief();
-    window.maxColors = 5;
-    window.renderEngine = _id("renderEngine").selectedIndex;
-    window.fromURLs = { 0: [], 1: [] };
-    window.hiddenCounter = 0;
-    window.hiddenSVG = "";
-    window.masterSettings = "default";
-    window.pixelLayers = [];
-    window.positionInfo = {};
-    window.pxObject = {};
-    window.svgColors = [];
-    window.svgLayers = [];
+    _w.baseImg = "";
+    _w.colorPalette = [];
+    _w.colorThief = new ColorThief();
+    _w.maxColors = 5;
+    _w.renderEngine = _id("renderEngine").selectedIndex;
+    _w.fromURLs = { 0: [], 1: [] };
+    _w.hiddenCounter = 0;
+    _w.hiddenSVG = "";
+    _w.masterSettings = "default";
+    _w.pixelLayers = [];
+    _w.positionInfo = {};
+    _w.pxObject = {};
+    _w.svgColors = [];
+    _w.svgLayers = [];
 };
 
 var setSettings = function() {
