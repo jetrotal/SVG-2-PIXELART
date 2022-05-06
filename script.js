@@ -13,9 +13,10 @@ The essential libraries and modules are being loaded through the html file, they
  - color-thief library - gets dominant colors of the image and generates a color palette
  - svgson library - parses a svg file as a js object
  - pixelit library - creates pixelart output from canvas or images.
+ - anime library - randomizes properties and can be used to animate stuff
 
  ---------------------------------------------------------------------------------------------------------------------
- 
+
 */
 
 var _w = window; // 'window' can be altered to node equivalent, which is 'global'
