@@ -1,3 +1,4 @@
+//Dear Dev, collapse/minimize all the functions to get the general gist of the code
 
 var createHTMLmenu = function() {
 
@@ -56,18 +57,7 @@ var createHTMLmenu = function() {
                     "button":`<button onclick="${opt.func}">${opt.optName}</button>`,
 
                     "hr":`<hr>`,
-/*<div class="opt">
-   <div id="bg" style="opacity: 1; " class="opt">
-      <input type="checkbox" id="snapPixels" name="renderEngine" checked="" onclick="updateSVGcanvas('current', 'snapPixels')" style="margin:10px"> 
-      <div onclick="_id('bgPicker').click()" style="margin: 0 5px;">
-         Background Color
-         <div style="height:10px;margin:0;padding:0;background-color:red;display:block;" class="button">
-            <input type="color" style="width:0;height:0;opacity:0;margin:0;padding:0" id="bgPicker">
-         </div>
-      </div>
-   </div>
-</div>
-*/
+
                     "color":`<div id="${opt.id}" style="opaity:1;" class="opt">
                     <input type="checkbox" id="box${opt.id}" checked="" onclick="updateSVGcanvas('current', '${opt.val}')" style="margin:10px">
                     <button onclick="_id('${opt.id}Picker').click()" style="margin: -5px 0px; font-size:12px; padding:0;min-width: -webkit-fill-available;text-align: left;">
@@ -95,6 +85,10 @@ var createHTMLmenu = function() {
     };
 
     createOptDivs(opts, document.getElementById("pixelProperties"));
+    strokeRange.oninput = sizeRange.oninput = aliasingRange.oninput = resolutionRange.oninput = thicknessRange.oninput = function() {
+        changeLoader("block");
+        sleep(1).then(updateSVGcanvas);
+    };
 }();
 
 var EssentialFunctions = function() {
@@ -255,7 +249,6 @@ var prototypePixelItfeatures = function() {
     }
 }();
 
-var pxObject = {};
 var pixelLayerObject = class {
     constructor() {
         this.draftCanvas = '';
@@ -295,14 +288,6 @@ var setSettings = function() {
     };
 };
 
-var loadedSVG = "";
-//const svgo = new SVGO();
-
-strokeRange.oninput = sizeRange.oninput = aliasingRange.oninput = resolutionRange.oninput = thicknessRange.oninput = function() {
-    changeLoader("block");
-    sleep(1).then(updateSVGcanvas);
-};
-
 var fileInput = document.createElement("input");
 fileInput.type = "file";
 fileInput.accept = ".svg";
@@ -326,7 +311,7 @@ function initFileLoader(e) {
         sleep(1).then(initConversion(readerEvent.target.result));
 };
 
-async function initConversion(obj = loadedSVG) {
+async function initConversion(obj) {
 
     obj = await SVGO_ALL.optimize(obj, { path: ""}).data;  
     obj = await SVGO_ALL.optimize(obj, { path: ""}).data;  
@@ -743,77 +728,3 @@ function randomizeSettings() {
         }
     });
 };
-/*
-document.addEventListener(
-    "DOMContentLoaded",
-    initConversion(baseImg.outerHTML)
-);
-
-/* <div class="opt">
-                <button onclick="updateSVGcanvas('current','sizeVal')"> ↶ </button>
-                <div>
-                    <p>SVG Size: <span id="sizeVal"></span>% <span id="realSizeVal"></span></p>
-                    <input type="range" min="1" max="200" step=".1" value="100" id="sizeRange"></input>
-                </div>
-            </div>
-            <hr>
-            <div class="opt">
-                <button onclick="updateSVGcanvas('current','resVal')"> ↶ </button>
-                <div>
-                    <p>Pixel Resolution: <span id="resVal"></span></p>
-                    <input type="range" min="1" max="50" step=".5" value="25" id="resolutionRange"></input>
-                </div>
-            </div>
-            <div id="snapper">
-                <input style="margin:10px" type="checkbox" id="snapPixels" name="renderEngine" checked="" onclick="updateSVGcanvas('current')">
-                <span>Snap 2 Pixel-Perfect Grid</span>
-            </div>
-            <hr>
-            <div class="opt">
-                <button onclick="updateSVGcanvas('current','thVal')"> ↶ </button>
-                <div>
-                    <p>Borders Thickness: <span id="thVal"></span></p>
-                    <input type="range" min="-255" max="-1" step="1" value="-127" id="thicknessRange"></input>
-                </div>
-            </div>
-
-            <div class="opt">
-                <button onclick="updateSVGcanvas('current','alVal')"> ↶ </button>
-                <div>
-                    <p>Borders Aliasing: <span id="alVal"></span></p>
-                    <input type="range" min="0" max="255" step="1" value="255" id="aliasingRange"></input>
-                </div>
-            </div>
-            <hr>
-
-            <div class="opt">
-                <button onclick="_id('renderEngine').selectedIndex =0; updateSVGcanvas('current')"> ↶ </button>
-                <div>
-                    <p>Render Quality: </p>
-                    <select style="width:100%" id="renderEngine" onchange="updateSVGcanvas('current')">
-          <option value="0">Draft - Faster</option>
-          <option value="1">Accurate - Slower</option>
-        </select>
-                </div>
-            </div>
-            <hr>
-
-            <div class="opt">
-                <button onclick="randomizeSettings()">Randomize Settings</button>
-            </div>
-            <hr>
-            <div class="opt">
-                <button onclick="fileInput.click();">🡅 Upload SVG File</button>
-            </div>
-            <div class="opt">
-   <div id="bg" style="opacity: 1; " class="opt">
-      <input type="checkbox" id="snapPixels" name="renderEngine" checked="" onclick="updateSVGcanvas('current', 'snapPixels')" style="margin:10px"> 
-      <div onclick="_id('bgPicker').click()" style="margin: 0 5px;">
-         Background Color
-         <div style="height:10px;margin:0;padding:0;background-color:red;display:block;" class="button">
-            <input type="color" style="width:0;height:0;opacity:0;margin:0;padding:0" id="bgPicker">
-         </div>
-      </div>
-   </div>
-</div>
-            */
