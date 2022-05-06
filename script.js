@@ -1,4 +1,3 @@
-//collapse all functions to get the general gist of the code
 
 var createHTMLmenu = function() {
 
