@@ -123,7 +123,7 @@ var EssentialFunctions = function() {
         } catch (e) {}
     };
 
-    window.getBlob = function(tgt, objType = "image/svg+xml") {
+    window.makeBlob = function(tgt, objType = "image/svg+xml") {
         const blob = new Blob([tgt], {
             type: objType
         });
@@ -272,7 +272,7 @@ var pixelLayerObject = class {
         this.trim = '';
         this.tempCanvas = '';
     }
-}
+};
 
 var setDefaultVariables = function() {
     _id("temp").innerHTML = "";
@@ -373,25 +373,25 @@ async function initConversion(obj) {
     }
     mountPreviews(baseImg);
     prepareSVG(obj);
-    await explodeSVG(svgColors);
+    await explodeSVGlayers(svgColors);
 };
 
 function mountPreviews(obj) {
     obj.outerHTML =
         '<img id="baseImg" src=' +
-        getBlob(obj.outerHTML) +
+        makeBlob(obj.outerHTML) +
         `>
   <img id="pixelImg" >`;
 };
 
 function prepareSVG(obj) {
     var json = svgson.parseSync(obj);
-    hideLayers(json.children);
+    hideSVGlayers(json.children);
     hiddenSVG = svgson.stringify(json);
     //console.log(hiddenSVG);
 };
 
-function hideLayers(json) {
+function hideSVGlayers(json) {
     for (var i = 0; i < json.length; i++) {
         var hiddenTag = `;;display:none!important/*${hiddenCounter}*/;;`,
             renderable = "a audio canvas circle ellipse foreignObject iframe image line path polygon polyline rect svg switch text textPath tspan unknown use video".split(" "),
@@ -402,12 +402,12 @@ function hideLayers(json) {
 
         renderable && (json[i].attributes.style ? json[i].attributes.style += hiddenTag : json[i].attributes.style = hiddenTag, svgColors.push(hiddenTag));
 
-        json[i].children && !unrenderable && hideLayers(json[i].children);
+        json[i].children && !unrenderable && hideSVGlayers(json[i].children);
         hiddenCounter++;
     }
 };
 
-async function explodeSVG(strings) {
+async function explodeSVGlayers(strings) {
     var i = 0;
 
     for (var str of strings) {
@@ -478,7 +478,7 @@ async function explodeSVG(strings) {
             pxObject[o].tempCanvas.height = positionInfo.height;
             pxObject[o].tempCanvas.getContext("2d").drawImage(image, 0, 0, positionInfo2.newWidth, positionInfo2.newHeight);
 
-            pxObject[o].trim = trimSVGBorders(pxObject[o].tempCanvas);
+            pxObject[o].trim = trimCanvasWhitespace(pxObject[o].tempCanvas);
             pxObject[o].tempCanvas = null;
 
             pxObject[o].draftCanvas = _id("temp").appendChild(pxObject[o].trim.obj);
@@ -512,7 +512,7 @@ async function explodeSVG(strings) {
     }
 };
 
-var trimSVGBorders = function() {
+var trimCanvasWhitespace = function() {
 
     function rowBlank(imageData, width, y) {
         for (var x = 0; x < width; ++x)
