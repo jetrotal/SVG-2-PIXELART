@@ -263,7 +263,7 @@ var prototypePixelItfeatures = function() {
 var pixelLayerObject = class {
     constructor() {
         this.draftCanvas = '';
-        this.exactCanvas = '';
+        this.accurateCanvas = '';
         this.pxCanvas = '';
         this.dimensions = { x: 0, y: 0, w: 0, h: 0 };
         this.px = {}
@@ -460,16 +460,16 @@ async function explodeSVG(strings) {
         pxObject[o].mixBlendMode = mixBlendModeOBJ;
         
         pxObject[o].svg = newSVG;
-        pxObject[o].exactCanvas = _id("temp").appendChild(document.createElement("canvas"));
-        pxObject[o].exactCanvas.className = "pixelated";
-        pxObject[o].exactCanvas.id = "exact_" + o;
-        pxObject[o].exactCanvas.width = positionInfo2.width;
-        pxObject[o].exactCanvas.height = positionInfo2.height;
+        pxObject[o].accurateCanvas = _id("temp").appendChild(document.createElement("canvas"));
+        pxObject[o].accurateCanvas.className = "pixelated";
+        pxObject[o].accurateCanvas.id = "exact_" + o;
+        pxObject[o].accurateCanvas.width = positionInfo2.width;
+        pxObject[o].accurateCanvas.height = positionInfo2.height;
 
       
          
 
-        newSVG = pxObject[o].exactCanvas.getContext("2d");
+        newSVG = pxObject[o].accurateCanvas.getContext("2d");
 
         new drawInlineSVG(newSVG, pxObject[o].svg, function(image) {
             pxObject[o].palette = colorThief.getPalette(image, maxColors);
@@ -623,7 +623,7 @@ function initUpdate(mode, targetSetting) {
 
     if (!currrenderEngine) {
         for (const layer of obj)
-            _id("renderEngine").selectedIndex ? pxObject[layer].px.setDrawFrom(pxObject[layer].exactCanvas) : pxObject[layer].px.setDrawFrom(pxObject[layer].draftCanvas), pxObject[layer].px.draw();
+            _id("renderEngine").selectedIndex ? pxObject[layer].px.setDrawFrom(pxObject[layer].accurateCanvas) : pxObject[layer].px.setDrawFrom(pxObject[layer].draftCanvas), pxObject[layer].px.draw();
         renderEngine = _id("renderEngine").selectedIndex;
     };
     var pixelSize;
