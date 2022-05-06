@@ -1,4 +1,23 @@
-//Dear Dev, collapse/minimize all the functions to get the general gist of the code
+/*
+
+SVG 2 PIXELART
+---------------------------------------------------------------------------------------------------------------------
+
+Dear Dev, collapse/minimize all the functions to get the general gist of the code
+
+---------------------------------------------------------------------------------------------------------------------
+
+The essential libraries and modules are being loaded through the html file, they are:
+
+ - svgo-browser module - optmizes svg files to remove groups and similar elements
+ - color-thief library - gets dominant colors of the image and generates a color palette
+ - svgson library - parses a svg file as a js object
+ - pixelit library - creates pixelart output from canvas or images.
+
+ ---------------------------------------------------------------------------------------------------------------------
+ 
+*/
+
 var _w = window; // 'window' can be altered to node equivalent, which is 'global'
 
 var createHTMLmenu = function() {
